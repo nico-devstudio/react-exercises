@@ -2,24 +2,45 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
-  const [quantity, setQuantity] = useState(1);
+  const [products, setProducts] = useState([
+    {
+      name: "Laptop",
+      price: 1000,
+      quantity: 0,
+    },
+    { name: "Phone", price: 500, quantity: 0 },
+    { name: "Headphones", price: 100, quantity: 0 },
+  ]);
 
-  function handleIncreaseQuantity() {
-    setQuantity((num) => num + 1);
+  function handleIncreaseQuantity(index) {
+    setProducts((currentProducts) => {
+      const newProducts = [...currentProducts];
+      newProducts[index] = {
+        ...newProducts[index],
+        quantity: newProducts[index].quantity + 1,
+      };
+      return newProducts;
+    });
   }
 
-  function handleDecreaseQuantity() {
-    setQuantity((num) => (num > 1 ? num - 1 : 1));
+  function handleDecreaseQuantity(quantity) {
+    setProducts((num) => (quantity > 1 ? num - 1 : 1));
   }
 
   return (
     <>
-      <h2>Laptop</h2>
-      <p>Price: $1000</p>
-      <button onClick={handleDecreaseQuantity}>-</button>
-      <button onClick={handleIncreaseQuantity}>+</button>
-      <p>Quantity:{quantity}</p>
-      <p>Total:${1000 * quantity} </p>
+      {products.map((item, indexOf) => {
+        return (
+          <div key={item.name}>
+            <h2>{item.name}</h2>
+            <p>Price: ${item.price}</p>
+            <p>Quantity:{item.quantity}</p>
+            <button onClick={handleDecreaseQuantity}>-</button>
+            <button onClick={() => handleIncreaseQuantity(indexOf)}>+</button>
+          </div>
+        );
+      })}
+      <p>Total:${1000} </p>
     </>
   );
 }
