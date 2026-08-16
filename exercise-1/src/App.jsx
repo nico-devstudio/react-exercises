@@ -1,47 +1,43 @@
 import { useState } from "react";
-import "./App.css";
 
 function App() {
-  const [products, setProducts] = useState([
-    {
-      name: "Laptop",
-      price: 1000,
-      quantity: 0,
-    },
-    { name: "Phone", price: 500, quantity: 0 },
-    { name: "Headphones", price: 100, quantity: 0 },
-  ]);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [age, setAge] = useState("");
 
-  function handleIncreaseQuantity(index) {
-    setProducts((currentProducts) => {
-      const newProducts = [...currentProducts];
-      newProducts[index] = {
-        ...newProducts[index],
-        quantity: newProducts[index].quantity + 1,
-      };
-      return newProducts;
-    });
+  function handleNameChange(event) {
+    setName(event.target.value);
   }
 
-  function handleDecreaseQuantity(quantity) {
-    setProducts((num) => (quantity > 1 ? num - 1 : 1));
+  function handleEmailChange(event) {
+    setEmail(event.target.value);
+  }
+
+  function handleAgeChange(event) {
+    setAge(event.target.value);
   }
 
   return (
-    <>
-      {products.map((item, indexOf) => {
-        return (
-          <div key={item.name}>
-            <h2>{item.name}</h2>
-            <p>Price: ${item.price}</p>
-            <p>Quantity:{item.quantity}</p>
-            <button onClick={handleDecreaseQuantity}>-</button>
-            <button onClick={() => handleIncreaseQuantity(indexOf)}>+</button>
-          </div>
-        );
-      })}
-      <p>Total:${1000} </p>
-    </>
+    <div>
+      <p>
+        Name:{" "}
+        <input type="text" value={name} onChange={handleNameChange} required />
+        Character: {name.length}
+      </p>
+      <p>
+        Email:{" "}
+        <input
+          type="email"
+          value={email}
+          onChange={handleEmailChange}
+          required
+        />
+      </p>
+      <p>
+        Age:{" "}
+        <input type="number" value={age} onChange={handleAgeChange} required />
+      </p>
+    </div>
   );
 }
 
